@@ -46,19 +46,26 @@ export async function uploadFile(file) {
     await ensureCollectionExists();
 
     const uploadDir = path.join(
-      // process.cwd(), "src", "app",
-      os.tmpdir(),
+      process.cwd(),
+      "src",
+      "app",
+      // os.tmpdir(),
       "uploads"
     );
+    console.log("Upload directory path:", uploadDir);
+
     await fs.mkdir(uploadDir, { recursive: true });
 
     const filePath = path.join(uploadDir, file.name);
+    console.log("File path:", filePath);
+
     await fs.writeFile(filePath, Buffer.from(await file.arrayBuffer()));
 
     const directoryExists = await fs
       .access(uploadDir)
       .then(() => true)
       .catch(() => false);
+    console.log("Directory exists:", directoryExists);
 
     if (!directoryExists) {
       throw new Error(`Directory ${uploadDir} does not exist`);

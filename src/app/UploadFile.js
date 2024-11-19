@@ -5,6 +5,7 @@ import path from "path";
 import { UnstructuredDirectoryLoader } from "@langchain/community/document_loaders/fs/unstructured";
 import { QdrantClient } from "@qdrant/js-client-rest";
 import OpenAI from "openai";
+import os from "os";
 
 const collectionName = "prana";
 const VECTOR_SIZE = 3072;
@@ -44,7 +45,11 @@ export async function uploadFile(file) {
   try {
     await ensureCollectionExists();
 
-    const uploadDir = path.join(process.cwd(), "src", "app", "uploads");
+    const uploadDir = path.join(
+      // process.cwd(), "src", "app",
+      os.tmpdir(),
+      "uploads"
+    );
     await fs.mkdir(uploadDir, { recursive: true });
 
     const filePath = path.join(uploadDir, file.name);

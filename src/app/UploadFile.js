@@ -6,8 +6,8 @@ import { UnstructuredDirectoryLoader } from "@langchain/community/document_loade
 import { QdrantClient } from "@qdrant/js-client-rest";
 import OpenAI from "openai";
 
-const collectionName = "test";
-const VECTOR_SIZE = 3072; // Size for text-embedding-3-large model
+const collectionName = "prana";
+const VECTOR_SIZE = 3072;
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -20,14 +20,12 @@ const client = new QdrantClient({
 
 async function ensureCollectionExists() {
   try {
-    // Check if collection exists
     const collections = await client.getCollections();
     const collectionExists = collections.collections.some(
       (collection) => collection.name === collectionName
     );
 
     if (!collectionExists) {
-      // Create collection if it doesn't exist
       await client.createCollection(collectionName, {
         vectors: {
           size: VECTOR_SIZE,
@@ -44,7 +42,6 @@ async function ensureCollectionExists() {
 
 export async function uploadFile(file) {
   try {
-    // Ensure collection exists before processing
     await ensureCollectionExists();
 
     const uploadDir = path.join(process.cwd(), "src", "app", "uploads");
@@ -80,14 +77,13 @@ export async function uploadFile(file) {
 
         const embedding = embeddingResponse.data[0].embedding;
 
-        // Validate embedding dimension
         if (embedding.length !== VECTOR_SIZE) {
           console.error(`Invalid embedding size: ${embedding.length}`);
           continue;
         }
 
         points.push({
-          id: crypto.randomUUID(), 
+          id: crypto.randomUUID(),
           vector: embedding,
           payload: {
             content: doc.pageContent,

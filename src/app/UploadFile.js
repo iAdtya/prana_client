@@ -46,10 +46,10 @@ export async function uploadFile(file) {
     await ensureCollectionExists();
 
     const uploadDir = path.join(
-      // process.cwd(),
-      // "src",
-      // "app",
-      os.tmpdir(),
+      process.cwd(),
+      "src",
+      "app",
+      // os.tmpdir(),
       "uploads"
     );
     console.log("Upload directory path:", uploadDir);

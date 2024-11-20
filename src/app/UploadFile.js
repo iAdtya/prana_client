@@ -88,7 +88,7 @@ export async function uploadFile(file) {
     }
 
     const directoryLoader = new UnstructuredDirectoryLoader(uploadDir, {
-      apiKey: "o1mEdVkM3472ddFIwJG6IpdNfeBfh4",
+      apiKey: process.env.UNSTRUCTURED_API_KEY 
     });
     console.log("UnstructuredDirectoryLoader", directoryLoader);
     

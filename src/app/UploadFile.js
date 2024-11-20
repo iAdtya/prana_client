@@ -5,7 +5,6 @@ import path from "path";
 import { UnstructuredDirectoryLoader } from "@langchain/community/document_loaders/fs/unstructured";
 import { QdrantClient } from "@qdrant/js-client-rest";
 import OpenAI from "openai";
-import os from "os";
 
 const collectionName = "prana";
 const VECTOR_SIZE = 3072;
@@ -91,7 +90,8 @@ export async function uploadFile(file) {
     const directoryLoader = new UnstructuredDirectoryLoader(uploadDir, {
       apiKey: "o1mEdVkM3472ddFIwJG6IpdNfeBfh4",
     });
-
+    console.log("UnstructuredDirectoryLoader", directoryLoader);
+    
     const directoryDocs = await directoryLoader.load();
     console.log("Number of documents loaded:", directoryDocs.length);
 

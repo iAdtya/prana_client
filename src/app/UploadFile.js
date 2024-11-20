@@ -59,7 +59,24 @@ export async function uploadFile(file) {
     const filePath = path.join(uploadDir, file.name);
     console.log("File path:", filePath);
 
-    await fs.writeFile(filePath, Buffer.from(await file.arrayBuffer()));
+    try {
+      await fs.writeFile(filePath, Buffer.from(await file.arrayBuffer()));
+      console.log(`File successfully written to: ${filePath}`);
+
+      // Check if the file exists after writing
+      const fileExists = await fs
+        .access(filePath)
+        .then(() => true)
+        .catch(() => false);
+      console.log(`File exists after writing: ${fileExists}`);
+
+      if (!fileExists) {
+        throw new Error("File does not exist after writing.");
+      }
+    } catch (err) {
+      console.error("Error during file writing:", err);
+      throw new Error("File write operation failed.");
+    }
 
     const directoryExists = await fs
       .access(uploadDir)

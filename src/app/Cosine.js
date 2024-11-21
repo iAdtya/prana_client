@@ -3,7 +3,7 @@
 import { QdrantClient } from "@qdrant/js-client-rest";
 import OpenAI from "openai";
 
-const collection = "prana";
+const collection = "test";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

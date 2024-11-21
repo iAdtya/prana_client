@@ -5,7 +5,7 @@ import path from "path";
 import { UnstructuredDirectoryLoader } from "@langchain/community/document_loaders/fs/unstructured";
 import { UnstructuredClient } from "unstructured-client";
 import { Strategy } from "unstructured-client/sdk/models/shared/index.js";
-
+import os from "os";
 import { QdrantClient } from "@qdrant/js-client-rest";
 import OpenAI from "openai";
 
@@ -53,7 +53,11 @@ export async function uploadFile(file) {
   try {
     await ensureCollectionExists();
 
-    const uploadDir = path.join(process.cwd(), "src", "app", "uploads");
+    const uploadDir = path.join(
+      // process.cwd(), "src", "app",
+      os.tmpdir(),
+      "uploads"
+    );
     await fs.mkdir(uploadDir, { recursive: true });
 
     const filePath = path.join(uploadDir, file.name);

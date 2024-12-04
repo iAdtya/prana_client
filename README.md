@@ -11,9 +11,28 @@ npm install
 ```
 
 ```bash
-npm run dev
+cp .env.example .env
+```
+
+## Tool Schema
+
+Remember the name of tool to be same in handleToolCall function in my case its “retrieve_data”
+
+![schema](./schema.png)
+
+```json
+{
+  "type": "object",
+  "required": ["query"],
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "The search query to retrieve podcast data."
+    }
+  }
+}
 ```
 
 ```bash
-cp .env.example .env
+npm run dev
 ```

@@ -9,7 +9,7 @@ import os from "os";
 import { QdrantClient } from "@qdrant/js-client-rest";
 import OpenAI from "openai";
 
-const collectionName = "test";
+const collectionName = "prana";
 const VECTOR_SIZE = 3072;
 
 const openai = new OpenAI({
